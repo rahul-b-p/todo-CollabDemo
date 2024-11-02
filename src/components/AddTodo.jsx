@@ -9,23 +9,29 @@ function AddTodo() {
         timestamp: ''
     })
 
-    const taskSetUp=()=>{
+    const timeSetUp = () => {
         const now = new Date().toLocaleString()
         setTask({
             ...task,
             timestamp: now
-          })
-        addData()
+        })
+        task.timestamp=="" && alert('content saved')
     }
 
-    const addData =()=>{
-        console.log(task);
-        
+    const addData = () => {
+        const { title, description, due } = task
+        if (!title || !description || !due) {
+            alert('Please fill the feilds completely')
+        }
+        else {
+            timeSetUp()
+            console.log(task);
+        }
     }
     return (
         <>
-            <div className='w-100'>
-                <h3 className='fw-bold'>What's new to do..?</h3>
+            <div className='w-100 mt-5 pt-5'>
+                <h3 className='fw-bold mt-5'>What's new to do..?</h3>
                 <form className='mt-5 shadow p-4 transparent rounded'>
                     <Row className='mb-4'>
                         <Col md={6} className='pe-2'>
@@ -37,10 +43,10 @@ function AddTodo() {
                             <input value={task.due} onChange={(e) => setTask({ ...task, due: e.target.value })} type="date" className='form-control' placeholder='due date' />
                         </Col>
                     </Row>
-    
+
                     <label>Description</label>
                     <textarea onChange={(e) => setTask({ ...task, description: e.target.value })} className='form-control' type="text" placeholder='description' />
-                    <button onClick={taskSetUp} type='button' className='btn btn-dark mt-4'>Add New</button>
+                    <button onClick={addData} type='button' className='btn btn-dark mt-4'>{task.timestamp == "" ? 'Save' : 'Add New'}</button>
                 </form>
             </div>
         </>
